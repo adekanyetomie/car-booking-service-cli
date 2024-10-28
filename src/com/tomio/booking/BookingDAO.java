@@ -9,7 +9,7 @@ public class BookingDAO {
         };
     }
 
-    public static Booking[] getBookings() {
+    public Booking[] getBookings() {
         return bookings;
     }
 }

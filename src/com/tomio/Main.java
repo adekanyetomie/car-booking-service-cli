@@ -7,21 +7,23 @@ import com.tomio.user.UserService;
 
 import java.util.Arrays;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         CarService carService = new CarService();
         UserService userService = new UserService();
 
         //Users
         User[] users = userService.getUsers();
-        for (User user : users) {
-            System.out.println(user.toString());
-        }
+        System.out.println(Arrays.toString(users));
+
+
+//        for (User user : users) {
+//            System.out.println(user.toString());
+//        }
 
         //Cars
-        Car[] cars = CarService.getCars();
+
+        Car[] cars = carService.getCars();
         for (Car car : cars) {
 //            System.out.println(car);
 

@@ -2,8 +2,9 @@ package com.tomio.car;
 
 public class CarService {
 
-	public static Car[] getCars(){
-	    return CarDao.getCars();
+	public Car[] getCars(){
+		CarArrayDataAccessService carArrayDataAccessService = new CarArrayDataAccessService();
+	    return carArrayDataAccessService.getCars();
 	}
 
 }

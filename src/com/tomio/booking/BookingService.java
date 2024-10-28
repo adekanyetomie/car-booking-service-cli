@@ -1,50 +1,54 @@
 package com.tomio.booking;
 
 import com.tomio.car.Car;
-import com.tomio.car.CarDao;
+import com.tomio.car.CarArrayDataAccessService;
 import com.tomio.user.User;
-import com.tomio.user.UserDAO;
+import com.tomio.user.UserArrayDataAccessService;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
 public class BookingService {
 
-    private static Car car1;
-    private static User user1;
+    private User user1;
 
-    public static void bookCar() {
+    public  void bookCar() throws Exception {
         /*list available cars -
             returns all cars first time
             then remaining available  cars for the next times
-         */
-        Car[]  cars = CarDao.getCars();
-        User[] users = UserDAO.getUsers();
-          for (Car car : cars) {
+//         */
+        CarArrayDataAccessService carArrayDataAccessService = new CarArrayDataAccessService();
+        Car[] cars = carArrayDataAccessService.getCars();
+
+        UserArrayDataAccessService userArrayDataAccessService = new UserArrayDataAccessService();
+        User[] users = userArrayDataAccessService.getUsers();
+
+
+        for (Car car : cars) {
             System.out.println(car);
-           car1 = car;
 
 //        Scanner to select registration number
-        Scanner scanner = new Scanner(System.in);
-          String input = scanner.nextLine();
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
 
-          if (input.equals(car1.getRegNumber())) {
-              System.out.println(car1 + " was selected");
-          }
+            if (input.equals(car.getRegNumber())) {
+                System.out.println(car + " was selected");
+            }
 
 
-              for (User user : users) {
-            System.out.println(user);
-                  user1 = user;
-              }
-        Scanner scanner2 = new Scanner(System.in);
-          String input2 = scanner2.nextLine();
-          int inpute = parseInt(input2);
+            for (User user : users) {
+                System.out.println(user);
+                user1 = user;
+            }
+            Scanner scanner2 = new Scanner(System.in);
+            String input2 = scanner2.nextLine();
+            int inpute = parseInt(input2);
 
-          if(inpute == user1.getId()){
-              System.out.println(user1 + " was selected");
-          }
+            if (inpute == user1.getId()) {
+                System.out.println(user1 + " was selected");
+            }
 
 
 //        Select car by registration number
@@ -54,10 +58,10 @@ public class BookingService {
 //        return a success or failure message
 
 
-    }
+        }
 
-//    private static void selectCarbyRegNumber(Scanner scanner) {
+//    private static void selectCarByRegNumber(Scanner scanner) {
 //
 //    }
-}
+    }
 }

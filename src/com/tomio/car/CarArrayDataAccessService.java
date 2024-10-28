@@ -1,6 +1,6 @@
 package com.tomio.car;
 
-public class CarDao {
+public class CarArrayDataAccessService implements CarDAO {
     private static final Car[] cars;
 
     static {
@@ -12,7 +12,8 @@ public class CarDao {
         };
     }
 
-    public static Car[] getCars() {
+    @Override
+    public Car[] getCars() {
         return cars;
     }
 
