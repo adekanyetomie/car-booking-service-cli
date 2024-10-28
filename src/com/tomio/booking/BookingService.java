@@ -1,29 +1,34 @@
 package com.tomio.booking;
 
 import com.tomio.car.Car;
-import com.tomio.car.CarArrayDataAccessService;
+import com.tomio.car.CarService;
 import com.tomio.user.User;
-import com.tomio.user.UserArrayDataAccessService;
+import com.tomio.user.UserService;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
 public class BookingService {
+     final CarService carService;
+     final UserService userService;
 
     private User user1;
+
+    public BookingService(CarService carService, UserService userService) {
+        this.carService = carService;
+        this.userService = userService;
+    }
+
 
     public  void bookCar() throws Exception {
         /*list available cars -
             returns all cars first time
             then remaining available  cars for the next times
 //         */
-        CarArrayDataAccessService carArrayDataAccessService = new CarArrayDataAccessService();
-        Car[] cars = carArrayDataAccessService.getCars();
+        Car[] cars = carService.getCars();
 
-        UserArrayDataAccessService userArrayDataAccessService = new UserArrayDataAccessService();
-        User[] users = userArrayDataAccessService.getUsers();
+        User[] users = userService.getUsers();
 
 
         for (Car car : cars) {

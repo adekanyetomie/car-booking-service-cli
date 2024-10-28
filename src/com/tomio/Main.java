@@ -1,16 +1,29 @@
 package com.tomio;
 
+import com.tomio.booking.BookingService;
 import com.tomio.car.Car;
+import com.tomio.car.CarArrayDataAccessService;
 import com.tomio.car.CarService;
 import com.tomio.user.User;
+import com.tomio.user.UserArrayDataAccessService;
 import com.tomio.user.UserService;
 
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        CarService carService = new CarService();
-        UserService userService = new UserService();
+
+        //dependency injection
+        CarArrayDataAccessService carArrayDataAccessService = new CarArrayDataAccessService();
+        CarService carService = new CarService(carArrayDataAccessService);
+
+        UserArrayDataAccessService userArrayDataAccessService = new UserArrayDataAccessService();
+        UserService userService = new UserService(userArrayDataAccessService);
+
+        BookingService bookingService = new BookingService(carService, userService);
+
+
+
 
         //Users
         User[] users = userService.getUsers();
