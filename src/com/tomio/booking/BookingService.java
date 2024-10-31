@@ -5,68 +5,91 @@ import com.tomio.car.CarService;
 import com.tomio.user.User;
 import com.tomio.user.UserService;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-import static java.lang.Integer.parseInt;
 
 public class BookingService {
      final CarService carService;
+     final BookingArrayDataAccessService bookingArrayDataAccessService;
      final UserService userService;
 
     private User user1;
 
-    public BookingService(CarService carService, UserService userService) {
+    public BookingService(CarService carService, UserService userService, BookingArrayDataAccessService bookingArrayDataAccessService) {
         this.carService = carService;
         this.userService = userService;
+        this.bookingArrayDataAccessService = bookingArrayDataAccessService;
     }
 
+    public List<Booking> bookings() {
+        return bookingArrayDataAccessService.getBookings();
+    }
 
-    public  void bookCar() throws Exception {
-        /*list available cars -
-            returns all cars first time
-            then remaining available  cars for the next times
-//         */
-        Car[] cars = carService.getCars();
-
-        User[] users = userService.getUsers();
-
-
-        for (Car car : cars) {
-            System.out.println(car);
-
-//        Scanner to select registration number
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
-
-            if (input.equals(car.getRegNumber())) {
-                System.out.println(car + " was selected");
-            }
-
-
-            for (User user : users) {
-                System.out.println(user);
-                user1 = user;
-            }
-            Scanner scanner2 = new Scanner(System.in);
-            String input2 = scanner2.nextLine();
-            int inpute = parseInt(input2);
-
-            if (inpute == user1.getId()) {
-                System.out.println(user1 + " was selected");
-            }
-
-
-//        Select car by registration number
-//        List all users
-//        select user by id
-//        book car
-//        return a success or failure message
-
-
+    public List<Car> getAllCars(List<Car> cars) {
+        if (cars.isEmpty()) { // checks if we have cars
+            return null;
         }
 
-//    private static void selectCarByRegNumber(Scanner scanner) {
-//
-//    }
+        List<Booking> bookings = bookingArrayDataAccessService.getBookings();
+        if (bookings.isEmpty()) { // checks if there are bookings if not all cars are available
+            return  cars;
+        }
+
+        List<Car> result = new ArrayList<>();
+// checks if the car at that index is booked if not add to result and if true set the car to booked
+        for (Car car : cars) {
+            boolean booked = false;
+            for (Booking booking : bookings) {
+                if (booking == null || booking.getCar().equals(car)){
+                    continue;
+                }
+                booked = true;
+            }
+            if(!booked) {
+                result.add(car);
+            }
+        }
+        return result;
+
+    }
+
+    public List<Car> getCars() {
+        return getAllCars(carService.getCars());
+    }
+
+    public List<Car> getElectricCars(){
+        return getAllCars(carService.getElectricCars());
+    }
+
+    public List<Car> getUserBookedCars(int id) {
+        List<Booking> bookings = bookingArrayDataAccessService.getBookings();
+        List<Car> result = new ArrayList<>();
+        for (Booking booking : bookings) {
+            if (booking.getUser().getId() == id ) {
+                result.add(booking.getCar());
+            }
+        }
+        return result;
+    }
+
+    public String bookCar(User user, String regNumber) throws Exception {
+
+        List<Car> cars = getCars();
+        if (cars.isEmpty()) {
+            throw new Exception("No cars found");
+        }
+
+        for (Car car : cars) {
+            if(car.getRegNumber().equals(regNumber)) {
+                Car userCar = carService.getCarbyId(regNumber);
+                String bookingId = UUID.randomUUID().toString();
+                bookingArrayDataAccessService.bookCar(new Booking(bookingId, user, userCar ));
+                return bookingId;
+            }
+        }
+        throw new Exception("Car with reg number " + regNumber + " is already booked");
+
     }
 }

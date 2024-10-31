@@ -1,14 +1,12 @@
 package com.tomio;
 
+import com.tomio.booking.BookingArrayDataAccessService;
 import com.tomio.booking.BookingService;
-import com.tomio.car.Car;
 import com.tomio.car.CarArrayDataAccessService;
 import com.tomio.car.CarService;
-import com.tomio.user.User;
-import com.tomio.user.UserArrayDataAccessService;
+import com.tomio.user.UserDataAccessService;
 import com.tomio.user.UserService;
-
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -17,34 +15,18 @@ public class Main {
         CarArrayDataAccessService carArrayDataAccessService = new CarArrayDataAccessService();
         CarService carService = new CarService(carArrayDataAccessService);
 
-        UserArrayDataAccessService userArrayDataAccessService = new UserArrayDataAccessService();
+        UserDataAccessService userArrayDataAccessService = new UserDataAccessService();
         UserService userService = new UserService(userArrayDataAccessService);
 
-        BookingService bookingService = new BookingService(carService, userService);
+        BookingArrayDataAccessService bookingArrayDataAccessService = new BookingArrayDataAccessService();
+        BookingService bookingService = new BookingService(carService, userService, bookingArrayDataAccessService);
+
+        Scanner scanner = new Scanner(System.in);
 
 
+    }
 
-
-        //Users
-        User[] users = userService.getUsers();
-        System.out.println(Arrays.toString(users));
-
-
-//        for (User user : users) {
-//            System.out.println(user.toString());
-//        }
-
-        //Cars
-
-        Car[] cars = carService.getCars();
-        for (Car car : cars) {
-//            System.out.println(car);
-
-            if (car.getElectric()) {
-                System.out.println(car);
-            }
-        }
-
+    private  static void printMenu(){
         System.out.println("""
                 1️⃣ - Book Car
                 2️⃣ - View All User Booked Cars
@@ -54,6 +36,5 @@ public class Main {
                 6️⃣ - View all users
                 7️⃣ - Exit""");
     }
-
-
 }
+

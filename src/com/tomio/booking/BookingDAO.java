@@ -1,15 +1,7 @@
 package com.tomio.booking;
 
-public class BookingDAO {
-    private static final Booking[] bookings;
+import java.util.List;
 
-    static {
-        bookings = new Booking[] {
-                new Booking()
-        };
-    }
-
-    public Booking[] getBookings() {
-        return bookings;
-    }
+public interface BookingDAO {
+    List<Booking> getBookings();
 }

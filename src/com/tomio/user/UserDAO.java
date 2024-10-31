@@ -1,8 +1,9 @@
 package com.tomio.user;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface UserDAO {
-    User[] getUsers() throws IOException;
+    List<User> getUsers() throws IOException;
 }
 

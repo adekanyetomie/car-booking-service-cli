@@ -1,15 +1,25 @@
 package com.tomio.user;
 
 import java.io.IOException;
+import java.util.List;
 
 public class UserService {
-    final UserArrayDataAccessService userArrayDataAccessService;
+    final UserDAO userDAO;
 
-    public UserService(UserArrayDataAccessService userArrayDataAccessService) {
-        this.userArrayDataAccessService = userArrayDataAccessService;
+    public UserService(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-    public User[] getUsers() throws IOException {
-        return userArrayDataAccessService.getUsers();
+    public List<User> getUsers() throws IOException {
+        return userDAO.getUsers();
+    }
+
+    public User getUser(int id) throws IOException {
+        for (User user : userDAO.getUsers()) {
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
     }
 }
