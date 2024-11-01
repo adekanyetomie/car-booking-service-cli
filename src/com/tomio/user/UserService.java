@@ -15,7 +15,7 @@ public class UserService {
     }
 
     public User getUser(int id) throws IOException {
-        for (User user : userDAO.getUsers()) {
+        for (User user : getUsers()) {
             if (user.getId() == id) {
                 return user;
             }

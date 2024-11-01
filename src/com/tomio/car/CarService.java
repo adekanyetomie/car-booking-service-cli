@@ -14,8 +14,8 @@ public class CarService {
 	    return carDAO.getCars();
 	}
 
-	public Car getCarbyId(String id) {
-		for (Car car : carDAO.getCars()) {
+	public Car getCarById(String id) {
+		for (Car car : getCars()) {
 			if (car.getRegNumber().equals(id)) {
 				return car;
 			}
@@ -24,19 +24,7 @@ public class CarService {
 	}
 
 	public List<Car> getElectricCars() {
-		List<Car> cars = carDAO.getCars();
-
-		if (cars.isEmpty()) {
-			return null;
-		}
-
-		List<Car> electricCars = new ArrayList<Car>();
-		for (Car car : cars) {
-			if (car.getElectric()) {
-				electricCars.add(car);
-			}
-		}
-		return electricCars;
+        return getCars().stream().filter(Car::getElectric).toList();
 	}
 
 }

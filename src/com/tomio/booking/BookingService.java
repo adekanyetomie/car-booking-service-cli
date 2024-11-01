@@ -83,7 +83,7 @@ public class BookingService {
 
         for (Car car : cars) {
             if(car.getRegNumber().equals(regNumber)) {
-                Car userCar = carService.getCarbyId(regNumber);
+                Car userCar = carService.getCarById(regNumber);
                 String bookingId = UUID.randomUUID().toString();
                 bookingArrayDataAccessService.bookCar(new Booking(bookingId, user, userCar ));
                 return bookingId;
