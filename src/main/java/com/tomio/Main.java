@@ -4,7 +4,9 @@ import com.tomio.booking.BookingArrayDataAccessService;
 import com.tomio.booking.BookingService;
 import com.tomio.car.CarArrayDataAccessService;
 import com.tomio.car.CarService;
+import com.tomio.user.UserDAO;
 import com.tomio.user.UserDataAccessService;
+import com.tomio.user.UserFakerDataAccessService;
 import com.tomio.user.UserService;
 import java.util.Scanner;
 
@@ -15,13 +17,24 @@ public class Main {
         CarArrayDataAccessService carArrayDataAccessService = new CarArrayDataAccessService();
         CarService carService = new CarService(carArrayDataAccessService);
 
-        UserDataAccessService userArrayDataAccessService = new UserDataAccessService();
-        UserService userService = new UserService(userArrayDataAccessService);
+        UserDAO userDAO = new UserFakerDataAccessService();
+        UserService userService = new UserService(userDAO);
 
         BookingArrayDataAccessService bookingArrayDataAccessService = new BookingArrayDataAccessService();
         BookingService bookingService = new BookingService(carService, userService, bookingArrayDataAccessService);
 
+        boolean loop = true;
         Scanner scanner = new Scanner(System.in);
+
+        while (loop) {
+            printMenu();
+            String input = scanner.nextLine();
+            switch (input) {
+//                 TODO complete implementation
+            }
+        }
+
+
 
 
     }

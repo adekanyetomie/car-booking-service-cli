@@ -37,7 +37,7 @@ public class BookingService {
             return  cars;
         }
 
-        List<Car> result = new ArrayList<>();
+        List<Car> result = new ArrayList<Car>();
 // checks if the car at that index is booked if not add to result and if true set the car to booked
         for (Car car : cars) {
             boolean booked = false;
@@ -65,7 +65,7 @@ public class BookingService {
 
     public List<Car> getUserBookedCars(int id) {
         List<Booking> bookings = bookingArrayDataAccessService.getBookings();
-        List<Car> result = new ArrayList<>();
+        List<Car> result = new ArrayList<Car>();
         for (Booking booking : bookings) {
             if (booking.getUser().getId() == id ) {
                 result.add(booking.getCar());

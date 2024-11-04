@@ -24,7 +24,7 @@ public class CarService {
 	}
 
 	public List<Car> getElectricCars() {
-        return getCars().stream().filter(Car::getElectric).toList();
+		return getCars().stream().filter(Car::getElectric).toList();
 	}
 
 }

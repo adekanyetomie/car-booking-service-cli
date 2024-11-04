@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -12,7 +13,7 @@ public class UserDataAccessService implements UserDAO {
 
     @Override
     public List<User> getUsers() throws IOException {
-            File userFile = new File("src/com/tomio/user/users.csv");
+            File userFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("users.txt")).getPath());
 
             List<User> users = new ArrayList<>();
 
